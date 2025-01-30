@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import org.nruharish.springmvc.model.Customer;
 import org.nruharish.springmvc.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +26,15 @@ public class CustomerController {
     @RequestMapping("/{customerId}")
     public Customer getCustomerById(@PathVariable("customerId") UUID id){
         return customerService.getCustomerById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity saveCutomer(@RequestBody Customer customer){
+
+        customerService.saveNewCustomer(customer);
+        return  new ResponseEntity(HttpStatus.CREATED);
+
+
     }
 
 }
