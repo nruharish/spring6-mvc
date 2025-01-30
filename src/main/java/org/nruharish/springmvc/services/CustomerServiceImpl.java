@@ -2,6 +2,7 @@ package org.nruharish.springmvc.services;
 
 import org.nruharish.springmvc.model.Customer;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -41,5 +42,27 @@ public class CustomerServiceImpl implements CustomerService{
                 .build();
         customerMap.put(savedCustomer.getId(), savedCustomer);
         return savedCustomer;
+    }
+
+    @Override
+    public void updateCustomerBy(UUID id, Customer customer){
+        System.out.println("######Customerid" + id.toString());
+        Customer savedCustomer = customerMap.get(id);
+        savedCustomer.setCustomerName(customer.getCustomerName());
+    }
+
+    @Override
+    public void deleteCustomerById(UUID id){
+        customerMap.remove(id);
+    }
+
+    @Override
+    public void updateCustomerByPatch(UUID customerId, Customer customer) {
+        Customer savedCustomer = customerMap.get(customerId);
+
+        if(StringUtils.hasText(customer.getCustomerName())){
+            savedCustomer.setCustomerName(customer.getCustomerName());
+        }
+        customerMap.put(customerId, savedCustomer);
     }
 }

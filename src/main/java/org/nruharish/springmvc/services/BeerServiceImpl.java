@@ -1,9 +1,11 @@
 package org.nruharish.springmvc.services;
 
+import ch.qos.logback.core.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.nruharish.springmvc.model.Beer;
 import org.nruharish.springmvc.model.BeerStyle;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -80,5 +82,38 @@ public class BeerServiceImpl implements BeerService {
                                                                 .updateDate(LocalDateTime.now()).build();
         beerMap.put(savedBeer.getId(), savedBeer);
         return savedBeer;
+    }
+
+    @Override
+    public void updateBeerById(UUID id, Beer beer) {
+        Beer savedBeer = beerMap.get(id);
+        savedBeer.setBeerName(beer.getBeerName());
+        savedBeer.setPrice(beer.getPrice());
+        savedBeer.setUpc(beer.getUpc());
+        savedBeer.setQuantityOnHand(beer.getQuantityOnHand());
+
+        beerMap.put(id, savedBeer);
+
+    }
+
+    @Override
+    public void deleteBeerById(UUID id) {
+        beerMap.remove(id);
+
+    }
+
+    @Override
+    public void patchById(UUID id, Beer beer) {
+        Beer savedBeer = beerMap.get(id);
+        if(StringUtils.hasText(beer.getBeerName()))
+            savedBeer.setBeerName(beer.getBeerName());
+        if(beer.getPrice() != null)
+            savedBeer.setPrice(beer.getPrice());
+        if(beer.getUpc() != null)
+            savedBeer.setUpc(beer.getUpc());
+        if(beer.getQuantityOnHand() != null)
+            savedBeer.setQuantityOnHand(beer.getQuantityOnHand());
+
+        beerMap.put(id, savedBeer);
     }
 }

@@ -34,7 +34,25 @@ public class CustomerController {
         customerService.saveNewCustomer(customer);
         return  new ResponseEntity(HttpStatus.CREATED);
 
+    }
+    @PutMapping("{customerId}")
+    public ResponseEntity updateCustomerById(@PathVariable  UUID customerId, @RequestBody  Customer customer){
 
+        customerService.updateCustomerBy(customerId, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteById(@PathVariable  UUID id){
+        customerService.deleteCustomerById(id);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity updateCustomerByPatch(@PathVariable  UUID id, @RequestBody  Customer customer) {
+        customerService.updateCustomerByPatch(id, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
