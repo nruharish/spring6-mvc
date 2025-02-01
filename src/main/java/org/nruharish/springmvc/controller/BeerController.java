@@ -26,6 +26,8 @@ public class BeerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Beer> listBeers(){
+        System.out.println("+++++++++++++++++++++" + "in get beer by id");
+
         return beerService.listBeers();
     }
 
