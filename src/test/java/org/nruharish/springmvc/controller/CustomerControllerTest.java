@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @WebMvcTest(CustomerController.class)
@@ -26,7 +27,14 @@ class CustomerControllerTest {
     CustomerService customerService;
     CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
     @Test
-    void listCustomers() {
+    void listCustomers() throws Exception {
+        given(customerService.listCustomers()).willReturn(customerServiceImpl.listCustomers());
+
+        mockMvc.perform(get("/api/v1/customer")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect((status().isOk()))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()", is(3)));
     }
 
     @Test
