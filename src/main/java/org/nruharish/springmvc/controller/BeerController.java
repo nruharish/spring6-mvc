@@ -2,6 +2,7 @@ package org.nruharish.springmvc.controller;
 
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.nruharish.springmvc.model.Beer;
 import org.nruharish.springmvc.services.BeerService;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
