@@ -1,8 +1,10 @@
 package org.nruharish.springmvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.nruharish.springmvc.model.Beer;
 import org.nruharish.springmvc.model.Customer;
 import org.nruharish.springmvc.services.BeerServiceImpl;
 import org.nruharish.springmvc.services.CustomerService;
@@ -18,8 +20,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @WebMvcTest(CustomerController.class)
 class CustomerControllerTest {
@@ -37,6 +38,17 @@ class CustomerControllerTest {
     void setUp(){
         customerServiceImpl = new CustomerServiceImpl();
     }
+
+    @Test
+    void testUpdateCustomer() throws Exception {
+        Customer customer = customerServiceImpl.listCustomers().get(0);
+
+        mockMvc.perform(put("/api/v1/customer/" + customer.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(customer)));
+    }
+
     @Test
     void saveCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
