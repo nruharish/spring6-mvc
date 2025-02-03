@@ -1,5 +1,7 @@
 package org.nruharish.springmvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.nruharish.springmvc.model.Beer;
@@ -33,10 +35,20 @@ class BeerControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @MockitoBean
     BeerService beerService;
     BeerServiceImpl beerServiceImpl = new BeerServiceImpl();
 
+    @Test
+    void testCreateNewBeer() throws JsonProcessingException {
+
+        Beer beer = beerServiceImpl.listBeers().get(0);
+
+        System.out.println(objectMapper.writeValueAsString(beer));
+    }
 
     @Test
     void listBeers() throws Exception {
