@@ -1,7 +1,10 @@
 package org.nruharish.springmvc.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.nruharish.springmvc.model.Customer;
+import org.nruharish.springmvc.services.BeerServiceImpl;
 import org.nruharish.springmvc.services.CustomerService;
 import org.nruharish.springmvc.services.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @WebMvcTest(CustomerController.class)
 class CustomerControllerTest {
@@ -25,7 +29,31 @@ class CustomerControllerTest {
 
     @MockitoBean
     CustomerService customerService;
-    CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
+    CustomerServiceImpl customerServiceImpl;
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp(){
+        customerServiceImpl = new CustomerServiceImpl();
+    }
+    @Test
+    void saveCustomer() throws Exception {
+        Customer customer = customerServiceImpl.listCustomers().get(0);
+        customer.setVersion(null);
+        customer.setId(null);
+        given(customerService.saveNewCustomer(customer)).willReturn(customerServiceImpl.listCustomers().get(1));
+
+        mockMvc.perform(post("/api/v1/customer")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(customer)))
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"));
+
+
+    }
+
     @Test
     void listCustomers() throws Exception {
         given(customerService.listCustomers()).willReturn(customerServiceImpl.listCustomers());

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.nruharish.springmvc.model.Customer;
 import org.nruharish.springmvc.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,10 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity saveCutomer(@RequestBody Customer customer){
 
-        customerService.saveNewCustomer(customer);
-        return  new ResponseEntity(HttpStatus.CREATED);
+        Customer saveCustomer = customerService.saveNewCustomer(customer);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/vi/customer/" + saveCustomer.getId().toString());
+        return  new ResponseEntity(headers, HttpStatus.CREATED);
 
     }
     @PutMapping("{customerId}")
