@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.nruharish.springmvc.model.Beer;
 import org.nruharish.springmvc.services.BeerService;
@@ -26,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.assertj.core.api.Assertions.*;
 
 //@SpringBootTest
 @WebMvcTest(BeerController.class)
@@ -87,6 +89,21 @@ class BeerControllerTest {
                 .andExpect((status().isOk()))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()", is(3)));
+    }
+
+    @Test
+    void testDeleteBeer() throws Exception {
+        Beer beer = beerServiceImpl.listBeers().get(0);
+
+        mockMvc.perform(delete("/api/v1/beer/" + beer.getId().toString())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        ArgumentCaptor<UUID> uuidArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
+        verify(beerService).deleteBeerById(uuidArgumentCaptor.capture());
+        assertThat(beer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
+        //assertThat(beer.getId()).isEqualTo("uuidArgumentCaptor.getValue()");
+
     }
 
     @Test
