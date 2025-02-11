@@ -132,6 +132,13 @@ class BeerControllerTest {
         assertThat(beer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
         assertThat(beerMap.get("beerName")).isEqualTo(beerArgumentCaptor.getValue().getBeerName());
     }
+
+    @Test
+    void getBeerByIdNotFound() throws Exception {
+        given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
+        mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID()))
+                .andExpect(status().isNotFound());
+    }
     @Test
     void getBeerById() throws Exception {
 
