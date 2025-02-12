@@ -1,15 +1,13 @@
 package org.nruharish.springmvc.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @NoArgsConstructor

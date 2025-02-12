@@ -1,9 +1,6 @@
 package org.nruharish.springmvc.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.nruharish.springmvc.model.BeerStyle;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import jakarta.persistence.*;
@@ -12,7 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @NoArgsConstructor
