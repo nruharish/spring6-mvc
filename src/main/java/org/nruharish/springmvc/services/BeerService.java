@@ -1,20 +1,20 @@
 package org.nruharish.springmvc.services;
 
-import org.nruharish.springmvc.model.Beer;
+import org.nruharish.springmvc.model.BeerDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface BeerService {
-    List<Beer> listBeers();
+    List<BeerDTO> listBeers();
 
-    Beer getBeerById(UUID id);
+    BeerDTO getBeerById(UUID id);
 
-    Beer saveNewBeer(Beer beer);
+    BeerDTO saveNewBeer(BeerDTO beer);
 
-    void updateBeerById(UUID id, Beer beer);
+    void updateBeerById(UUID id, BeerDTO beer);
 
     void deleteBeerById(UUID id);
 
-    void patchById(UUID id, Beer beer);
+    void patchById(UUID id, BeerDTO beer);
 }

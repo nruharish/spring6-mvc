@@ -1,20 +1,20 @@
 package org.nruharish.springmvc.services;
 
-import org.nruharish.springmvc.model.Customer;
+import org.nruharish.springmvc.model.CustomerDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface CustomerService {
-    List<Customer> listCustomers();
+    List<CustomerDTO> listCustomers();
 
-    Customer getCustomerById(UUID id);
+    CustomerDTO getCustomerById(UUID id);
 
-    Customer saveNewCustomer(Customer customer);
+    CustomerDTO saveNewCustomer(CustomerDTO customer);
 
-    void updateCustomerBy(UUID id, Customer customer);
+    void updateCustomerBy(UUID id, CustomerDTO customer);
 
     void deleteCustomerById(UUID id);
 
-    void updateCustomerByPatch(UUID customerId, Customer customer);
+    void updateCustomerByPatch(UUID customerId, CustomerDTO customer);
 }
