@@ -1,6 +1,8 @@
 package org.nruharish.springmvc.entities;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 import org.nruharish.springmvc.model.BeerStyle;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import jakarta.persistence.*;
@@ -18,6 +20,9 @@ import java.util.UUID;
 public class Beer {
     private String beerName;
     @Id
+    @GeneratedValue(generator = "UUID")
+    @UuidGenerator
+    @Column(length=36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
     @Version
     private Integer version;
