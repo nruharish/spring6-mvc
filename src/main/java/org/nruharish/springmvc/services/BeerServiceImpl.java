@@ -17,17 +17,6 @@ public class BeerServiceImpl implements BeerService {
     public BeerServiceImpl() {
         this.beerMap = new HashMap<>();
 
-        BeerDTO beer1 = BeerDTO.builder()
-                .id(UUID.randomUUID())
-                .version(1)
-                .beerName("Galaxy Cat")
-                .beerStyle(BeerStyle.PALE_ALE)
-                .upc("12356")
-                .price(new BigDecimal("12.99"))
-                .quantityOnHand(122)
-                .createdDate(LocalDateTime.now())
-                .updateDate(LocalDateTime.now())
-                .build();
 
         BeerDTO beer2 = BeerDTO.builder()
                 .id(UUID.randomUUID())
@@ -37,6 +26,17 @@ public class BeerServiceImpl implements BeerService {
                 .upc("12356222")
                 .price(new BigDecimal("11.99"))
                 .quantityOnHand(392)
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+        BeerDTO beer1 = BeerDTO.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName("Galaxy Cat")
+                .beerStyle(BeerStyle.PALE_ALE)
+                .upc("12356")
+                .price(new BigDecimal("12.99"))
+                .quantityOnHand(122)
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .build();
