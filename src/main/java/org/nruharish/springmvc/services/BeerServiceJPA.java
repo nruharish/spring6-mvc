@@ -1,6 +1,7 @@
 package org.nruharish.springmvc.services;
 
 import lombok.RequiredArgsConstructor;
+import org.nruharish.springmvc.entities.Beer;
 import org.nruharish.springmvc.mappers.BeerMapper;
 import org.nruharish.springmvc.model.BeerDTO;
 import org.nruharish.springmvc.repositories.BeerRepository;
@@ -29,9 +30,9 @@ public class BeerServiceJPA implements BeerService{
 
     @Override
     public Optional<BeerDTO> getBeerById(UUID id) {
-       // BeerDTO beerDTO = beerRepository.findById(id);
-        //return beerMapper.beerToBeerDTO();
-        return null;
+        Optional<Beer> beer = beerRepository.findById(id);
+        return Optional.ofNullable(beerMapper.beerToBeerDTO(beer.orElse(null)));
+        //return null;
     }
 
     @Override

@@ -28,8 +28,8 @@ public class BeerController {
 
 
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
-    public Optional<BeerDTO> getBeerById(@PathVariable("beerId") UUID beerId){
-        return beerService.getBeerById(beerId);
+    public BeerDTO getBeerById(@PathVariable("beerId") UUID beerId){
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value= BEER_PATH, method = RequestMethod.POST)
