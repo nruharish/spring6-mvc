@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -140,7 +141,7 @@ class BeerControllerTest {
 
         BeerDTO testBeer = beerServiceImpl.listBeers().get(0);
 
-        given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
+        given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
         //System.out.println(beerController.getBeerById(UUID.randomUUID()));
         System.out.println("++++++++++++++++++++In test getBeerById");

@@ -3,12 +3,13 @@ package org.nruharish.springmvc.services;
 import org.nruharish.springmvc.model.BeerDTO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface BeerService {
     List<BeerDTO> listBeers();
 
-    BeerDTO getBeerById(UUID id);
+    Optional<BeerDTO> getBeerById(UUID id);
 
     BeerDTO saveNewBeer(BeerDTO beer);
 
