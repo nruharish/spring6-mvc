@@ -6,6 +6,8 @@ import org.nruharish.springmvc.model.CustomerDTO;
 import org.nruharish.springmvc.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
@@ -40,6 +42,17 @@ class CustomerControllerIntTest {
         assertThrows(NotFoundException.class, () -> {
             customerController.getCustomerById(UUID.randomUUID());
         });
+    }
+
+    @Test
+    void saveCustomer(){
+        CustomerDTO customerDTO = CustomerDTO.builder()
+                .customerName("New Customer")
+                .build();
+        ResponseEntity responseEntity = customerController.saveCutomer(customerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.valueOf(201));
+
     }
 
 }
