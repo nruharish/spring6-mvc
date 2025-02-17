@@ -26,7 +26,7 @@ public class CustomerController {
 
     @RequestMapping("/{customerId}")
     public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id){
-        return customerService.getCustomerById(id);
+        return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(method = RequestMethod.POST)

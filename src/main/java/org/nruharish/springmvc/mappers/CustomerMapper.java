@@ -7,7 +7,7 @@ import org.nruharish.springmvc.model.CustomerDTO;
 
 @Mapper
 public interface CustomerMapper {
-    CustomerDTO customerDTOtoCustomer(Customer customer);
-    Customer customerToCustomerDTO (CustomerDTO customerDTO);
+    CustomerDTO customertoCustomerDTO(Customer customer);
+    Customer customerDTOToCustomer (CustomerDTO customerDTO);
 
 }
