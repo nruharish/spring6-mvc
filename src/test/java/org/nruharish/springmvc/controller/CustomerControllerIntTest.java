@@ -1,6 +1,7 @@
 package org.nruharish.springmvc.controller;
 
 import org.junit.jupiter.api.Test;
+import org.nruharish.springmvc.entities.Beer;
 import org.nruharish.springmvc.entities.Customer;
 import org.nruharish.springmvc.model.CustomerDTO;
 import org.nruharish.springmvc.repositories.CustomerRepository;
@@ -52,6 +53,15 @@ class CustomerControllerIntTest {
         ResponseEntity responseEntity = customerController.saveCutomer(customerDTO);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.valueOf(201));
+        assertThat(responseEntity.getHeaders().getLocation()).isNotNull();
+
+        String [] locationUUID = responseEntity.getHeaders().getLocation().getPath().split("/");
+
+        UUID uuid= UUID.fromString(locationUUID[4]);
+        Customer customer = customerRepository.findById(uuid).get();
+
+        assertThat(customer).isNotNull();
+
 
     }
 
