@@ -6,6 +6,8 @@ import org.nruharish.springmvc.model.BeerDTO;
 import org.nruharish.springmvc.repositories.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +58,22 @@ class BeerControllerIT {
         assertThat(dtos.size()).isEqualTo(0);
     }
 
+    @Transactional
+    @Rollback
+    @Test
+    void saveNewBeerTest(){
+        BeerDTO beerDTO = BeerDTO.builder()
+                .beerName("New Beer").build();
+        ResponseEntity responseEntity = beerController.handlePost(beerDTO);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.valueOf(201));
+        assertThat(responseEntity.getHeaders().getLocation()).isNotNull();
+
+        String [] locationUUID = responseEntity.getHeaders().getLocation().getPath().split("/");
+
+        UUID uuid= UUID.fromString(locationUUID[4]);
+        Beer beer = beerRepository.findById(uuid).get();
+
+        assertThat(beer).isNotNull();
+    }
 
 }
