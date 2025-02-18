@@ -2,6 +2,7 @@ package org.nruharish.springmvc.controller;
 
 import org.junit.jupiter.api.Test;
 import org.nruharish.springmvc.entities.Beer;
+import org.nruharish.springmvc.mappers.BeerMapper;
 import org.nruharish.springmvc.model.BeerDTO;
 import org.nruharish.springmvc.repositories.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ class BeerControllerIT {
     BeerController beerController;
     @Autowired
     BeerRepository beerRepository;
+    @Autowired
+    BeerMapper beerMapper;
 
 
     @Test
@@ -74,6 +77,23 @@ class BeerControllerIT {
         Beer beer = beerRepository.findById(uuid).get();
 
         assertThat(beer).isNotNull();
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    void updateExistingBeer(){
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDTO(beer);
+        beerDTO.setId(null);
+        beerDTO.setVersion(null);
+        final String updatedName = "UPDATED";
+        beerDTO.setBeerName(updatedName);
+        ResponseEntity responseEntity = beerController.upddateById(beer.getId(), beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.valueOf(204));
+        Beer updatedBeer = beerRepository.findById(beer.getId()).get();
+        assertThat(updatedBeer.getBeerName()).isEqualTo(updatedName);
     }
 
 }

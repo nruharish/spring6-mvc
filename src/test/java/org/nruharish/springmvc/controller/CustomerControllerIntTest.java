@@ -61,8 +61,5 @@ class CustomerControllerIntTest {
         Customer customer = customerRepository.findById(uuid).get();
 
         assertThat(customer).isNotNull();
-
-
-    }
-
+  }
 }
