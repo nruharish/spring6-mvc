@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -46,6 +48,8 @@ class CustomerControllerIntTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void saveCustomer(){
         CustomerDTO customerDTO = CustomerDTO.builder()
                 .customerName("New Customer")
@@ -62,4 +66,6 @@ class CustomerControllerIntTest {
 
         assertThat(customer).isNotNull();
   }
+
+
 }
