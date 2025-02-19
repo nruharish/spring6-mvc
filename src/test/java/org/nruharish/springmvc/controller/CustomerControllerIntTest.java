@@ -3,6 +3,7 @@ package org.nruharish.springmvc.controller;
 import org.junit.jupiter.api.Test;
 import org.nruharish.springmvc.entities.Beer;
 import org.nruharish.springmvc.entities.Customer;
+import org.nruharish.springmvc.mappers.CustomerMapper;
 import org.nruharish.springmvc.model.CustomerDTO;
 import org.nruharish.springmvc.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ class CustomerControllerIntTest {
 
     @Autowired
     CustomerController customerController;
+
+    @Autowired
+    CustomerMapper customerMapper;
 
     @Test
     void testlistAllCustomers(){
@@ -65,6 +69,16 @@ class CustomerControllerIntTest {
         Customer customer = customerRepository.findById(uuid).get();
 
         assertThat(customer).isNotNull();
+  }
+
+  @Test
+  void updateCustomerById(){
+        Customer customer = customerRepository.findAll().get(0);
+        CustomerDTO customerDTO = customerMapper.customertoCustomerDTO(customer);
+        final String newName = "New Name";
+        customerDTO.setCustomerName(newName);
+        customerController.updateCustomerById(customer.getId(), customerDTO);
+        assertThat(customerRepository.findById(customer.getId()).get().getCustomerName()).isEqualTo(newName);
   }
 
 
