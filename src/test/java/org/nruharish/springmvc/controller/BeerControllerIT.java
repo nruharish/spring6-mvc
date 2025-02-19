@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -101,6 +102,17 @@ class BeerControllerIT {
         assertThrows(NotFoundException.class , ()->{
             beerController.upddateById(UUID.randomUUID(), BeerDTO.builder().build());
         });
+    }
+
+    @Test
+    void deletebyId(){
+        Beer beer = beerRepository.findAll().get(0);
+        ResponseEntity responseEntity = beerController.deleteBeer(beer.getId());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        assertThat(beerRepository.findById(beer.getId())).isEmpty();
+        
+
     }
 
 }
