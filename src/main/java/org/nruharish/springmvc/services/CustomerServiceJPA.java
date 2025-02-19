@@ -44,10 +44,15 @@ public class CustomerServiceJPA implements  CustomerService{
     }
 
     @Override
-    public void updateCustomerBy(UUID id, CustomerDTO customer) {
-        Customer savedCustomer = customerRepository.findById(customer.getId()).get();
-        savedCustomer.setCustomerName(customer.getCustomerName());
-        customerRepository.save(savedCustomer);
+    public Optional<CustomerDTO> updateCustomerBy(UUID id, CustomerDTO customer) {
+        Optional<Customer> foundCustomerOpt = customerRepository.findById(id);
+        if(foundCustomerOpt.isEmpty())
+            return Optional.empty();
+        Customer foundCustomer = foundCustomerOpt.get();
+
+        foundCustomer.setCustomerName(customer.getCustomerName());
+        Customer savedCustomer = customerRepository.save(foundCustomer);
+        return Optional.of(customerMapper.customertoCustomerDTO(savedCustomer));
 
     }
 
