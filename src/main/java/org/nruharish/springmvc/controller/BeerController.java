@@ -1,5 +1,6 @@
 package org.nruharish.springmvc.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.nruharish.springmvc.model.BeerDTO;
@@ -7,6 +8,7 @@ import org.nruharish.springmvc.services.BeerService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class BeerController {
     }
 
     @RequestMapping(value= BEER_PATH, method = RequestMethod.POST)
-    public ResponseEntity handlePost(@RequestBody BeerDTO beer){
+    public ResponseEntity handlePost(@Validated @RequestBody BeerDTO beer){
         BeerDTO savedBeer = beerService.saveNewBeer(beer);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/vi/beer/" + savedBeer.getId().toString());
