@@ -165,8 +165,23 @@ class BeerControllerTest {
         MvcResult mockMVcResult = mockMvc.perform((post(BeerController.BEER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(beer)))).andExpect(status().isBadRequest()).andReturn();
-
+                .content(objectMapper.writeValueAsString(beer)))).
+                andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.length()", is(2))).andReturn();
         System.out.println(mockMVcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    void testBeerStyleNull() throws Exception {
+        BeerDTO beerDTO = BeerDTO.builder().beerName("Test Beer Name").build();
+
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        mockMvc.perform(post(BeerController.BEER_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isBadRequest());
+
     }
 }
