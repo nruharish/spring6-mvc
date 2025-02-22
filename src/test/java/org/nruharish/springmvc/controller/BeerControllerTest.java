@@ -116,7 +116,7 @@ class BeerControllerTest {
     }
 
     @Test
-    void testPathBeer() throws Exception {
+    void testPatchBeer() throws Exception {
         BeerDTO beer = beerServiceImpl.listBeers().get(0);
 
 

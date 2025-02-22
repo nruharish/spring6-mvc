@@ -47,13 +47,14 @@ public class BeerServiceJPA implements BeerService{
     public Optional<BeerDTO> updateBeerById(UUID id, BeerDTO beer) {
 
         AtomicReference<Optional<BeerDTO>> automicReference = new AtomicReference<>();
-
+        System.out.println("I was here@@@@@@@@@@@@@@@@@@");
         beerRepository.findById(id).ifPresentOrElse(
                 foundBeer -> {
                     foundBeer.setBeerName(beer.getBeerName());
                     foundBeer.setBeerStyle(beer.getBeerStyle());
                     foundBeer.setUpc(beer.getUpc());
                     foundBeer.setPrice(beer.getPrice());
+                    System.out.println("I was here@@@@@@@@@@@@@@@@@@");
                     automicReference.set(Optional.of(beerMapper.beerToBeerDTO(beerRepository.save(foundBeer)
                     )));
 
@@ -61,6 +62,7 @@ public class BeerServiceJPA implements BeerService{
                 }, () -> {
                     automicReference.set(Optional.empty());
                 });
+        System.out.println("I was here@@@@@@@@@@@@@@@@@@");
                 return automicReference.get();
     }
 
