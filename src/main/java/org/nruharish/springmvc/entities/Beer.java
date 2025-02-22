@@ -1,5 +1,6 @@
 package org.nruharish.springmvc.entities;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
@@ -18,6 +19,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Beer {
+    @NotNull
+    @NotBlank
     private String beerName;
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,9 +29,14 @@ public class Beer {
     private UUID id;
     @Version
     private Integer version;
+    @NotNull
     private BeerStyle beerStyle;
+    @NotNull
+    @NotBlank
     private String upc;
     private Integer quantityOnHand;
+    @DecimalMin(value = "0.0", inclusive = true)
+    @Digits(integer=2, fraction=2)
     private BigDecimal price;
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
