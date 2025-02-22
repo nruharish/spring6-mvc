@@ -20,6 +20,8 @@ public class BeerDTO {
     private Integer version;
     @NotNull
     private BeerStyle beerStyle;
+    @NotNull
+    @NotBlank
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;

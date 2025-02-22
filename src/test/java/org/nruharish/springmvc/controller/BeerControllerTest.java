@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.nruharish.springmvc.model.BeerDTO;
+import org.nruharish.springmvc.model.BeerStyle;
 import org.nruharish.springmvc.services.BeerService;
 import org.nruharish.springmvc.services.BeerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,5 +184,18 @@ class BeerControllerTest {
                 .content(objectMapper.writeValueAsString(beerDTO)))
                 .andExpect(status().isBadRequest());
 
+    }
+
+    @Test
+    void testBeerUpcNull() throws Exception {
+        BeerDTO beerDTO = BeerDTO.builder().beerName("Test Beer upc")
+                .beerStyle(BeerStyle.PORTER).build();
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        mockMvc.perform(post(BeerController.BEER_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isBadRequest());
     }
 }
