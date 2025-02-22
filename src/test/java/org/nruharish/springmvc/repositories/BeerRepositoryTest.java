@@ -1,5 +1,6 @@
 package org.nruharish.springmvc.repositories;
 
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.nruharish.springmvc.entities.Beer;
 import org.nruharish.springmvc.model.BeerStyle;
@@ -29,5 +30,19 @@ class BeerRepositoryTest {
         assertThat(savedBeer).isNotNull();
         assertThat(savedBeer.getId()).isNotNull();
     }
+    @Test
+    void testSaveBeerVEryLongName(){
 
+        assertThrows( ConstraintViolationException.class, () ->{
+
+            Beer savedBeer = beerRepository.save(
+                    Beer.builder().beerName("My Beer11111111111111111111111111111111111111111111111111111111111111111")
+                            .beerStyle(BeerStyle.PORTER)
+                            .upc("321")
+                            .price(new BigDecimal("11.34")).build()
+            );
+            beerRepository.flush();
+        });
+
+    }
 }

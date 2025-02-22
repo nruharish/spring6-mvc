@@ -21,6 +21,8 @@ import java.util.UUID;
 public class Beer {
     @NotNull
     @NotBlank
+    @Column(length = 50)
+    @Size(max = 50)
     private String beerName;
     @Id
     @GeneratedValue(generator = "UUID")
