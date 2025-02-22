@@ -133,6 +133,8 @@ class BeerControllerIT {
     }
 
     @Test
+    @Rollback
+    @Transactional
     void testUpdateNotFound (){
         assertThrows(NotFoundException.class , ()->{
             beerController.upddateById(UUID.randomUUID(), BeerDTO.builder().build());
@@ -140,6 +142,8 @@ class BeerControllerIT {
     }
 
     @Test
+    @Rollback
+    @Transactional
     void deletebyId(){
         Beer beer = beerRepository.findAll().get(0);
         ResponseEntity responseEntity = beerController.deleteBeer(beer.getId());
@@ -149,6 +153,8 @@ class BeerControllerIT {
     }
 
     @Test
+    @Rollback
+    @Transactional
     void deleteByIdNotFound(){
 
         assertThrows( NotFoundException.class, ()->{

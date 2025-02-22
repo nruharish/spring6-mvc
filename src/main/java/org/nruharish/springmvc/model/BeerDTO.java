@@ -18,10 +18,11 @@ public class BeerDTO {
     private Integer version;
     @NotNull
     private BeerStyle beerStyle;
-    @DecimalMin(value = "0.0", inclusive = true)
-    @Digits(integer=2, fraction=2)
+    @NotNull
+    @NotBlank
     private String upc;
     private Integer quantityOnHand;
+    @NotNull
     private BigDecimal price;
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;

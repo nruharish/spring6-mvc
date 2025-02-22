@@ -18,6 +18,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -159,7 +160,7 @@ class BeerControllerTest {
     }
     @Test
     void testBeerNullName() throws Exception {
-        BeerDTO beer = BeerDTO.builder().build();
+        BeerDTO beer = BeerDTO.builder().upc("123").price(new BigDecimal("11.22")).beerStyle(BeerStyle.PORTER).build();
         //assertThat(beer.getBeerName()).isNull();
         given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
 
@@ -199,8 +200,8 @@ class BeerControllerTest {
                 .andExpect(status().isBadRequest());
     }
     @Test
-    void testBeerPcieNotNull() throws Exception {
-        BeerDTO beerDTO = BeerDTO.builder().beerName("Test Beer upc")
+    void testBeerPriceNotNull() throws Exception {
+        BeerDTO beerDTO = BeerDTO.builder().beerName("Test Beer price not null")
                 .beerStyle(BeerStyle.PORTER).upc("abd").build();
         given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
 
