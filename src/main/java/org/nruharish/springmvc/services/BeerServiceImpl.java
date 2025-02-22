@@ -6,6 +6,7 @@ import org.nruharish.springmvc.model.BeerStyle;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -104,7 +105,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public void patchById(UUID id, BeerDTO beer) {
+    public Optional<BeerDTO> patchById(UUID id, BeerDTO beer) {
         BeerDTO savedBeer = beerMap.get(id);
         if(StringUtils.hasText(beer.getBeerName()))
             savedBeer.setBeerName(beer.getBeerName());
@@ -116,5 +117,6 @@ public class BeerServiceImpl implements BeerService {
             savedBeer.setQuantityOnHand(beer.getQuantityOnHand());
 
         beerMap.put(id, savedBeer);
+        return Optional.of(savedBeer);
     }
 }
