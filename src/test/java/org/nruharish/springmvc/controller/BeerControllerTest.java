@@ -198,4 +198,17 @@ class BeerControllerTest {
                 .content(objectMapper.writeValueAsString(beerDTO)))
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    void testBeerPcieNotNull() throws Exception {
+        BeerDTO beerDTO = BeerDTO.builder().beerName("Test Beer upc")
+                .beerStyle(BeerStyle.PORTER).upc("abd").build();
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        MvcResult mockMVcResult = mockMvc.perform(post(BeerController.BEER_PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isBadRequest()).andReturn();
+        System.out.println(mockMVcResult.getResponse().getContentAsString());
+    }
 }

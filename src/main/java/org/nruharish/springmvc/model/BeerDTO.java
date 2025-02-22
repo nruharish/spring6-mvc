@@ -1,8 +1,6 @@
 package org.nruharish.springmvc.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,8 +18,8 @@ public class BeerDTO {
     private Integer version;
     @NotNull
     private BeerStyle beerStyle;
-    @NotNull
-    @NotBlank
+    @DecimalMin(value = "0.0", inclusive = true)
+    @Digits(integer=2, fraction=2)
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;
