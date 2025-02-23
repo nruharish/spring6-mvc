@@ -3,7 +3,9 @@ package org.nruharish.springmvc.entities;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.type.SqlTypes;
 import org.nruharish.springmvc.model.BeerStyle;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import jakarta.persistence.*;
@@ -27,7 +29,8 @@ public class Beer {
     @Id
     @GeneratedValue(generator = "UUID")
     @UuidGenerator
-    @Column(length=36, columnDefinition = "varchar", updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length=36, columnDefinition = "Varchar(36)", updatable = false, nullable = false)
     private UUID id;
     @Version
     private Integer version;
