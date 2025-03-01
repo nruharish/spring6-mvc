@@ -26,6 +26,8 @@ public class Customer {
     @Column(length=36, columnDefinition = "Varchar(36)", updatable = false, nullable = false)
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
+    @Column(length = 255)
+    private String email;
     @Version
     private Integer version;
     private LocalDateTime createdDate;
